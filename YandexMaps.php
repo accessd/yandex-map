@@ -64,17 +64,17 @@ class YandexMaps extends Widget
         ymaps.ready(init);
             var myMap,
                 myPlacemark;
-        
+
             function init(){
                 myMap = new ymaps.Map("$this->id", {$this->mapOptions}, {$this->additionalOptions});
-                
+
                 var disableScroll = $this->disableScroll;
                 if ($this->disableScroll) {
-                    myMap.behaviors.disable('scrollZoom');                    
+                    myMap.behaviors.disable('scrollZoom');
                 }
 
-                var myPlacemarks = $myPlacemarks;        
-        
+                var myPlacemarks = $myPlacemarks;
+
                 for (var i = 0; i < $countPlaces; i++) {
                     myPlacemark = new ymaps.Placemark([myPlacemarks[i]['latitude'], myPlacemarks[i]['longitude']],
                     myPlacemarks[i]['options'][0],
@@ -84,9 +84,17 @@ class YandexMaps extends Widget
                     myPlacemarks[i]['options'][4],
                     myPlacemarks[i]['options'][5]
                     );
-                
+
                     myMap.geoObjects.add(myPlacemark);
                 }
+
+                var location = ymaps.geolocation.get();
+                location.then(
+                 function(result) {
+                  myMap.geoObjects.add(result.geoObjects)
+                  },);
+                myMap.setBounds(myMap.geoObjects.getBounds(), {checkZoomRange:true});
+                myMap.setZoom(myMap.getZoom()-0.4);
             }
 JS;
         $view->registerJs($js);
