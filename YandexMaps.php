@@ -92,7 +92,7 @@ class YandexMaps extends Widget
                 location.then(
                  function(result) {
                   myMap.geoObjects.add(result.geoObjects)
-                  },);
+                  });
                 myMap.setBounds(myMap.geoObjects.getBounds(), {checkZoomRange:true});
                 myMap.setZoom(myMap.getZoom()-0.4);
             }
