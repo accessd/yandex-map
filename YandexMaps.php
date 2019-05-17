@@ -95,6 +95,9 @@ class YandexMaps extends Widget
                   });
                 myMap.setBounds(myMap.geoObjects.getBounds(), {checkZoomRange:true});
                 myMap.setZoom(myMap.getZoom()-0.4);
+                if ($countPlaces == 1) {
+                    myPlacemark.balloon.open();
+                }
             }
 JS;
         $view->registerJs($js);
